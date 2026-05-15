@@ -22,17 +22,17 @@ export function AppLayout() {
   return (
     <div className="dark min-h-screen text-foreground">
       {/* Sidebar - desktop */}
-      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-border/60 bg-sidebar/70 backdrop-blur-xl lg:flex">
-        <div className="flex h-16 items-center gap-2 px-6 border-b border-border/60">
-          <div className="grid h-9 w-9 place-items-center rounded-xl gradient-neon glow-neon">
-            <Trophy className="h-5 w-5 text-neon-foreground" strokeWidth={2.5} />
+      <aside className="fixed inset-y-0 left-0 z-40 hidden w-64 flex-col border-r border-white/5 bg-sidebar/80 backdrop-blur-2xl lg:flex">
+        <div className="flex h-20 items-center gap-3 px-6">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary shadow-lg shadow-primary/20 rotate-3">
+            <Trophy className="h-6 w-6 text-white -rotate-3" strokeWidth={2.5} />
           </div>
-          <div className="flex flex-col leading-tight">
-            <span className="text-[10px] uppercase tracking-[0.2em] text-muted-foreground">EA Pelada</span>
-            <span className="text-base font-bold tracking-tight">PRO CLUB</span>
+          <div className="flex flex-col">
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-primary/80">Premium</span>
+            <span className="font-heading text-xl tracking-tight">Pitch Stats</span>
           </div>
         </div>
-        <nav className="flex-1 space-y-1 p-3">
+        <nav className="flex-1 space-y-1.5 p-4">
           {nav.map(item => {
             const active = path === item.to || (item.to !== "/" && path.startsWith(item.to));
             const Icon = item.icon;
@@ -40,53 +40,56 @@ export function AppLayout() {
               <Link
                 key={item.to}
                 to={item.to}
-                className={`group relative flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all ${
+                className={`group relative flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-bold tracking-wide transition-all ${
                   active
-                    ? "bg-primary/10 text-primary"
+                    ? "bg-white/5 text-primary"
                     : "text-muted-foreground hover:bg-white/5 hover:text-foreground"
                 }`}
               >
                 {active && (
                   <motion.div
                     layoutId="activeNav"
-                    className="absolute inset-0 rounded-xl border border-primary/30"
+                    className="absolute inset-y-1 left-0 w-1 rounded-full bg-primary"
                     transition={{ type: "spring", stiffness: 400, damping: 30 }}
                   />
                 )}
-                <Icon className="h-4 w-4 relative" />
-                <span className="relative">{item.label}</span>
-                {active && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-primary glow-neon relative" />}
+                <Icon className={`h-5 w-5 relative transition-colors ${active ? "text-primary" : "group-hover:text-foreground"}`} />
+                <span className="relative uppercase text-[12px]">{item.label}</span>
               </Link>
             );
           })}
         </nav>
-        <div className="m-3 rounded-2xl glass p-3 flex items-center gap-3">
-          <img src={me.avatar} alt="" className="h-10 w-10 rounded-xl object-cover ring-2 ring-primary/40" />
+        <div className="m-4 rounded-2xl glass p-4 flex items-center gap-3 border-white/5">
+          <div className="relative">
+            <img src={me.avatar} alt="" className="h-10 w-10 rounded-full object-cover ring-2 ring-primary" />
+            <div className="absolute -bottom-1 -right-1 h-4 w-4 rounded-full bg-primary border-2 border-sidebar flex items-center justify-center text-[8px] font-bold text-white">
+              {me.overall}
+            </div>
+          </div>
           <div className="min-w-0 flex-1">
-            <p className="text-sm font-semibold truncate">{me.name}</p>
-            <p className="text-[11px] text-muted-foreground">OVR {me.overall} • {me.position}</p>
+            <p className="text-sm font-bold truncate tracking-tight">{me.name}</p>
+            <p className="text-[10px] text-muted-foreground uppercase font-black">{me.position}</p>
           </div>
         </div>
       </aside>
 
       {/* Top bar */}
-      <header className="sticky top-0 z-30 flex h-16 items-center gap-3 border-b border-border/40 bg-background/60 px-4 backdrop-blur-xl lg:pl-72 lg:pr-8">
-        <div className="flex items-center gap-2 lg:hidden">
-          <div className="grid h-9 w-9 place-items-center rounded-xl gradient-neon glow-neon">
-            <Trophy className="h-5 w-5 text-neon-foreground" strokeWidth={2.5} />
+      <header className="sticky top-0 z-30 flex h-20 items-center gap-4 border-b border-white/5 bg-background/50 px-4 backdrop-blur-2xl lg:pl-72 lg:pr-8">
+        <div className="flex items-center gap-3 lg:hidden">
+          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary rotate-3">
+            <Trophy className="h-6 w-6 text-white -rotate-3" strokeWidth={2.5} />
           </div>
-          <span className="text-sm font-bold tracking-tight">PRO CLUB</span>
+          <span className="font-heading text-lg tracking-tight">Pitch Stats</span>
         </div>
-        <div className="ml-auto flex items-center gap-2">
-          <div className="hidden md:flex items-center gap-2 glass rounded-xl px-3 py-2 text-sm text-muted-foreground w-72">
+        <div className="ml-auto flex items-center gap-3">
+          <div className="hidden md:flex items-center gap-3 bg-white/5 border border-white/5 rounded-xl px-4 py-2.5 text-sm text-muted-foreground w-80 focus-within:ring-2 ring-primary/20 transition-all">
             <Search className="h-4 w-4" />
-            <span>Buscar jogadores, partidas...</span>
+            <span className="font-medium">Procurar tudo...</span>
           </div>
-          <button className="grid h-10 w-10 place-items-center rounded-xl glass relative">
-            <Bell className="h-4 w-4" />
-            <span className="absolute top-2 right-2 h-2 w-2 rounded-full bg-primary glow-neon" />
+          <button className="grid h-11 w-11 place-items-center rounded-xl bg-white/5 border border-white/5 hover:bg-white/10 transition-colors relative group">
+            <Bell className="h-5 w-5 text-muted-foreground group-hover:text-foreground" />
+            <span className="absolute top-3 right-3 h-2 w-2 rounded-full bg-primary" />
           </button>
-          <img src={me.avatar} alt="" className="h-10 w-10 rounded-xl object-cover ring-2 ring-primary/40" />
         </div>
       </header>
 

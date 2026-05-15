@@ -21,30 +21,35 @@ export function StatCard({ label, value, delta, icon: Icon, accent = "neon", ind
   const positive = (delta ?? 0) >= 0;
   return (
     <motion.div
-      initial={{ opacity: 0, y: 16 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ delay: index * 0.05 }}
-      whileHover={{ y: -4 }}
-      className="relative glass rounded-2xl p-4 overflow-hidden group"
+      whileHover={{ scale: 1.02 }}
+      className="sport-card rounded-3xl p-6 group cursor-default"
     >
-      <div className={`absolute -top-10 -right-10 h-32 w-32 rounded-full ${accent === "gold" ? "bg-gold/10" : accent === "accent" ? "bg-accent/10" : "bg-primary/10"} blur-3xl group-hover:scale-150 transition-transform duration-700`} />
-      <div className="relative flex items-start justify-between">
-        <div className="space-y-1">
-          <p className="text-[11px] font-medium uppercase tracking-[0.15em] text-muted-foreground">{label}</p>
-          <p className={`num-display text-3xl font-black ${accentMap[accent]}`}>{value}</p>
-        </div>
+      <div className="flex items-center justify-between">
+        <p className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground group-hover:text-primary transition-colors">
+          {label}
+        </p>
         {Icon && (
-          <div className={`grid h-9 w-9 place-items-center rounded-xl bg-white/5 ${accentMap[accent]}`}>
+          <div className="text-muted-foreground group-hover:text-primary transition-colors">
             <Icon className="h-4 w-4" />
           </div>
         )}
       </div>
-      {delta !== undefined && (
-        <div className={`relative mt-3 flex items-center gap-1 text-xs font-semibold ${positive ? "text-primary" : "text-destructive"}`}>
-          {positive ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
-          {positive ? "+" : ""}{delta}% no mês
-        </div>
-      )}
+      
+      <div className="mt-4 flex items-end justify-between gap-2">
+        <h3 className={`num-display text-4xl font-black ${accentMap[accent]}`}>
+          {value}
+        </h3>
+        
+        {delta !== undefined && (
+          <div className={`flex items-center gap-1 text-[10px] font-black uppercase tracking-wider mb-1 ${positive ? "text-primary" : "text-accent"}`}>
+            {positive ? <TrendingUp className="h-3 w-3" /> : <TrendingDown className="h-3 w-3" />}
+            {positive ? "+" : ""}{delta}%
+          </div>
+        )}
+      </div>
     </motion.div>
   );
 }

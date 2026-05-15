@@ -17,85 +17,78 @@ const sizeMap = {
   xl: "w-full max-w-[320px] h-[460px]",
 };
 
-export function PlayerCard({ player, size = "md", variant = "neon", to, index = 0 }: Props) {
+export function PlayerCard({ player, size = "md", variant = "neon", to, index = 0, className }: Props & { className?: string }) {
   const isGold = variant === "gold" || player.overall >= 85;
   const Wrapper: any = to ? Link : "div";
   const props = to ? { to } : {};
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24, scale: 0.95 }}
+      initial={{ opacity: 0, y: 30, scale: 0.9 }}
       animate={{ opacity: 1, y: 0, scale: 1 }}
-      transition={{ delay: index * 0.04, type: "spring", stiffness: 200, damping: 22 }}
-      whileHover={{ y: -8, scale: 1.03 }}
-      className="group"
+      transition={{ delay: index * 0.04, type: "spring", stiffness: 260, damping: 20 }}
+      whileHover={{ y: -12, scale: 1.05 }}
+      className={`group cursor-pointer ${className}`}
     >
       <Wrapper {...props}>
         <div
-          className={`relative ${sizeMap[size]} rounded-3xl overflow-hidden border ${
-            isGold ? "border-gold/40 gradient-card-gold" : "border-primary/30 gradient-card-fifa"
+          className={`relative ${sizeMap[size]} rounded-[2rem] overflow-hidden border-2 transition-all duration-500 ${
+            isGold ? "border-gold/50" : "border-primary/50"
           }`}
           style={{
+            background: isGold 
+              ? "linear-gradient(165deg, oklch(0.25 0.06 70), oklch(0.12 0.02 240))" 
+              : "linear-gradient(165deg, oklch(0.25 0.08 260), oklch(0.12 0.02 240))",
             boxShadow: isGold
-              ? "0 30px 60px -20px oklch(0.85 0.16 90 / 0.4), inset 0 1px 0 oklch(1 0 0 / 0.1)"
-              : "0 30px 60px -20px oklch(0.86 0.22 150 / 0.4), inset 0 1px 0 oklch(1 0 0 / 0.1)",
+              ? "0 40px 80px -20px oklch(0.78 0.15 85 / 0.3)"
+              : "0 40px 80px -20px oklch(0.65 0.28 260 / 0.3)",
           }}
         >
-          {/* shine */}
-          <div className="absolute inset-0 opacity-60 pointer-events-none bg-grid" />
-          <div className="absolute -inset-x-10 -top-10 h-40 bg-gradient-to-b from-white/10 to-transparent blur-2xl" />
+          {/* Holographic Shine */}
+          <div className="absolute inset-0 opacity-0 group-hover:opacity-20 transition-opacity duration-700 bg-gradient-to-tr from-transparent via-white to-transparent -translate-x-full group-hover:translate-x-full" />
+          <div className="absolute inset-0 bg-grid opacity-20 pointer-events-none" />
 
-          {/* Top: OVR + POS */}
-          <div className="relative z-10 flex items-start justify-between p-4">
-            <div className="flex flex-col items-center">
-              <span className={`num-display text-5xl font-black leading-none ${isGold ? "text-gold text-glow-gold" : "text-primary text-glow-neon"}`}>
-                {player.overall}
-              </span>
-              <span className="text-[10px] font-bold tracking-[0.2em] text-foreground/80 mt-1">
-                {player.position}
-              </span>
-            </div>
-            <div className="text-right text-[10px] font-bold tracking-wider text-muted-foreground">
-              <div>#{player.shirt}</div>
-              <div className="mt-1">{player.foot === "Destro" ? "PD" : "PE"}</div>
-            </div>
+          {/* Card Header */}
+          <div className="relative z-10 flex flex-col items-center pt-6">
+            <span className={`num-display leading-none ${size === "xl" ? "text-7xl" : "text-5xl"} font-black ${isGold ? "text-gold" : "text-primary"}`}>
+              {player.overall}
+            </span>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-foreground/60">
+              {player.position}
+            </span>
           </div>
 
-          {/* Player image */}
-          <div className="relative z-10 mx-auto -mt-2 h-1/2 w-full px-6">
-            <div className="relative h-full w-full">
-              <div className="absolute inset-0 rounded-full bg-gradient-radial from-white/20 to-transparent blur-2xl" />
+          {/* Player Avatar with Glow */}
+          <div className="relative z-10 mx-auto mt-4 px-6 h-1/2">
+            <div className="relative h-full aspect-square mx-auto">
+              <div className={`absolute inset-0 rounded-full blur-3xl opacity-30 ${isGold ? "bg-gold" : "bg-primary"}`} />
               <img
                 src={player.avatar}
                 alt={player.name}
-                className="relative h-full w-full object-cover object-top rounded-2xl"
+                className="relative h-full w-full object-cover rounded-3xl border-2 border-white/5 shadow-2xl"
               />
             </div>
           </div>
 
-          {/* Name */}
-          <div className="relative z-10 px-4 mt-3 text-center">
-            <p className={`font-black tracking-wide uppercase ${size === "xl" ? "text-2xl" : size === "lg" ? "text-lg" : "text-sm"}`}>
+          {/* Name & Stats */}
+          <div className="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-background via-background/90 to-transparent pt-12">
+            <h3 className={`font-heading text-center leading-tight mb-4 ${size === "xl" ? "text-3xl" : "text-xl"}`}>
               {player.nick}
-            </p>
-            <div className={`my-2 h-px ${isGold ? "bg-gold/40" : "bg-primary/40"}`} />
-          </div>
-
-          {/* Stats */}
-          {size !== "sm" && (
-            <div className="relative z-10 px-4 grid grid-cols-3 gap-1 text-[10px] font-bold">
+            </h3>
+            
+            <div className="grid grid-cols-3 gap-2 border-t border-white/10 pt-4">
               {[
-                ["GOL", player.goals],
-                ["AST", player.assists],
-                ["VIT", player.wins],
-              ].map(([l, v]) => (
-                <div key={l as string} className="flex flex-col items-center">
-                  <span className="num-display text-base font-black text-foreground">{v}</span>
-                  <span className="text-muted-foreground tracking-widest">{l}</span>
+                { l: "GOL", v: player.goals },
+                { l: "AST", v: player.assists },
+                { l: "MVP", v: player.mvps },
+              ].map((s) => (
+                <div key={s.l} className="flex flex-col items-center">
+                  <span className="num-display text-lg font-black">{s.v}</span>
+                  <span className="text-[8px] font-black uppercase tracking-widest text-muted-foreground">{s.l}</span>
                 </div>
               ))}
             </div>
-          )}
+          </div>
         </div>
       </Wrapper>
     </motion.div>

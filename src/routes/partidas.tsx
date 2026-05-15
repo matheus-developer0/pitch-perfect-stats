@@ -18,24 +18,24 @@ function PartidasPage() {
   });
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-end justify-between gap-4 flex-wrap">
+    <div className="space-y-8">
+      <div className="flex items-center justify-between gap-4 flex-wrap">
         <div>
-          <h1 className="text-3xl lg:text-4xl font-black tracking-tight">Partidas</h1>
-          <p className="text-muted-foreground mt-1">Organize peladas, confirme presença e jogue.</p>
+          <h1 className="text-4xl lg:text-5xl font-heading tracking-tight leading-none">Partidas</h1>
+          <p className="text-muted-foreground mt-2 font-medium">Organize, jogue e acompanhe seus resultados.</p>
         </div>
-        <button onClick={() => setShowModal(true)} className="inline-flex items-center gap-2 rounded-xl gradient-neon px-4 py-2.5 text-sm font-bold text-neon-foreground glow-neon hover:scale-105 transition-transform">
-          <Plus className="h-4 w-4" /> Criar Partida
+        <button onClick={() => setShowModal(true)} className="btn-premium flex items-center gap-2">
+          <Plus className="h-5 w-5" /> Criar Partida
         </button>
       </div>
 
-      <div className="flex gap-2 overflow-x-auto scrollbar-hide">
+      <div className="flex gap-2 overflow-x-auto scrollbar-hide pb-2">
         {([
           ["todas", "Todas"], ["aovivo", "Ao Vivo"], ["agendadas", "Agendadas"], ["finalizadas", "Finalizadas"],
         ] as const).map(([k, l]) => (
           <button key={k} onClick={() => setTab(k as any)}
-            className={`px-4 py-2 rounded-xl text-sm font-bold whitespace-nowrap transition-all ${
-              tab === k ? "gradient-neon text-neon-foreground glow-neon" : "glass text-muted-foreground hover:text-foreground"
+            className={`px-6 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all ${
+              tab === k ? "bg-primary text-white shadow-lg shadow-primary/30" : "bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground border border-white/5"
             }`}>
             {l}
           </button>
@@ -56,68 +56,74 @@ function MatchCard({ match, index }: { match: Match; index: number }) {
   const isFinished = match.status === "Finalizada";
 
   return (
-    <motion.div initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.05 }}
-      whileHover={{ y: -4 }}
-      className="relative glass rounded-3xl p-5 overflow-hidden group">
-      <div className="absolute -top-16 -right-16 h-40 w-40 rounded-full bg-primary/10 blur-3xl group-hover:bg-primary/20 transition-colors" />
-
-      <div className="relative flex items-start justify-between">
-        <div>
-          <div className="flex items-center gap-2 mb-1">
-            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{match.type}</span>
-            <span className="inline-flex items-center gap-1 text-[10px] text-muted-foreground">
-              {match.privacy === "Privada" ? <Lock className="h-2.5 w-2.5" /> : <Globe className="h-2.5 w-2.5" />} {match.privacy}
-            </span>
+    <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: index * 0.05 }}
+      whileHover={{ scale: 1.02 }}
+      className="sport-card rounded-[2rem] p-6 group cursor-default">
+      
+      <div className="flex items-start justify-between">
+        <div className="space-y-1">
+          <div className="flex items-center gap-2">
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-primary">{match.type}</span>
+            <span className="h-1 w-1 rounded-full bg-white/20" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground">{match.privacy}</span>
           </div>
-          <h3 className="text-lg font-black">{match.name}</h3>
+          <h3 className="text-2xl font-heading leading-tight group-hover:text-primary transition-colors">{match.name}</h3>
         </div>
         {isLive && (
-          <span className="inline-flex items-center gap-1.5 rounded-full bg-destructive/20 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-destructive">
-            <span className="h-1.5 w-1.5 rounded-full bg-destructive animate-pulse" /> Ao Vivo
-          </span>
-        )}
-        {isFinished && (
-          <span className="rounded-full bg-white/5 px-2 py-1 text-[10px] font-bold uppercase tracking-widest text-muted-foreground">Final</span>
+          <div className="flex items-center gap-2 rounded-full bg-accent/10 border border-accent/20 px-3 py-1 animate-pulse">
+            <div className="h-1.5 w-1.5 rounded-full bg-accent" />
+            <span className="text-[10px] font-black uppercase tracking-widest text-accent">Ao Vivo</span>
+          </div>
         )}
       </div>
 
       {(isLive || isFinished) && (
-        <div className="relative mt-4 glass-strong rounded-2xl p-4 flex items-center justify-around">
+        <div className="mt-6 flex items-center justify-between gap-4 py-4 border-y border-white/5">
           <div className="text-center flex-1">
-            <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">{match.teamA}</p>
-            <p className="num-display text-4xl font-black text-primary">{match.scoreA}</p>
+            <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest mb-1">{match.teamA}</p>
+            <p className="num-display text-5xl font-black text-foreground">{match.scoreA}</p>
           </div>
-          <div className="text-xs text-muted-foreground font-bold">VS</div>
+          <div className="text-xs font-black text-muted-foreground bg-white/5 rounded-lg px-2 py-1 italic">VS</div>
           <div className="text-center flex-1">
-            <p className="text-[10px] text-muted-foreground font-bold uppercase tracking-widest">{match.teamB}</p>
-            <p className="num-display text-4xl font-black text-accent">{match.scoreB}</p>
+            <p className="text-[10px] text-muted-foreground font-black uppercase tracking-widest mb-1">{match.teamB}</p>
+            <p className="num-display text-5xl font-black text-foreground">{match.scoreB}</p>
           </div>
         </div>
       )}
 
-      <div className="relative mt-4 space-y-2 text-sm text-muted-foreground">
-        <div className="flex items-center gap-2"><MapPin className="h-4 w-4" /> {match.location}</div>
-        <div className="flex items-center gap-2"><Calendar className="h-4 w-4" /> {new Date(match.date).toLocaleDateString("pt-BR")} • {match.time}</div>
+      <div className="mt-6 space-y-3">
+        <div className="flex items-center gap-3 text-xs font-medium text-muted-foreground">
+          <MapPin className="h-4 w-4 text-primary" /> 
+          <span className="uppercase tracking-wide">{match.location}</span>
+        </div>
+        <div className="flex items-center gap-3 text-xs font-medium text-muted-foreground">
+          <Clock className="h-4 w-4 text-primary" /> 
+          <span className="uppercase tracking-wide">{new Date(match.date).toLocaleDateString("pt-BR")} • {match.time}</span>
+        </div>
       </div>
 
-      <div className="relative mt-4 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="flex -space-x-2">
+      <div className="mt-8 flex items-center justify-between pt-4 border-t border-white/5">
+        <div className="flex items-center gap-3">
+          <div className="flex -space-x-3">
             {players.slice(0, 4).map(p => (
-              <img key={p.id} src={p.avatar} className="h-7 w-7 rounded-full border-2 border-background object-cover" />
+              <img key={p.id} src={p.avatar} className="h-8 w-8 rounded-full border-2 border-surface object-cover shadow-xl" />
             ))}
           </div>
-          <span className="text-xs text-muted-foreground"><Users className="inline h-3 w-3 mr-1" />{match.confirmed}/{match.capacity}</span>
+          <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground">{match.confirmed}/{match.capacity}</span>
         </div>
 
         {isLive ? (
-          <Link to="/partidas/$id" params={{ id: match.id }} className="inline-flex items-center gap-1.5 rounded-xl bg-destructive px-3 py-2 text-xs font-bold text-destructive-foreground hover:scale-105 transition-transform">
-            <Play className="h-3 w-3 fill-current" /> Entrar
+          <Link to="/partidas/$id" params={{ id: match.id }} className="bg-accent text-white px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-accent/20 hover:scale-105 active:scale-95 transition-all">
+            Entrar
           </Link>
         ) : isFinished ? (
-          <button className="rounded-xl glass px-3 py-2 text-xs font-bold">Súmula</button>
+          <button className="bg-white/5 text-foreground px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest hover:bg-white/10 transition-all border border-white/5">
+            Súmula
+          </button>
         ) : (
-          <button className="rounded-xl gradient-neon text-neon-foreground px-3 py-2 text-xs font-bold hover:scale-105 transition-transform">Confirmar</button>
+          <button className="bg-primary text-white px-5 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-primary/20 hover:scale-105 active:scale-95 transition-all">
+            Confirmar
+          </button>
         )}
       </div>
     </motion.div>
@@ -126,32 +132,29 @@ function MatchCard({ match, index }: { match: Match; index: number }) {
 
 function CreateMatchModal({ onClose }: { onClose: () => void }) {
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-50 grid place-items-center bg-background/80 backdrop-blur-sm p-4" onClick={onClose}>
-      <motion.div initial={{ scale: 0.95, y: 20 }} animate={{ scale: 1, y: 0 }} onClick={e => e.stopPropagation()}
-        className="glass-strong rounded-3xl p-6 w-full max-w-lg relative">
-        <button onClick={onClose} className="absolute top-4 right-4 grid h-8 w-8 place-items-center rounded-lg hover:bg-white/10"><X className="h-4 w-4" /></button>
-        <h2 className="text-2xl font-black">Nova Partida</h2>
-        <p className="text-sm text-muted-foreground">Configure sua próxima pelada.</p>
+    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="fixed inset-0 z-50 grid place-items-center bg-background/90 backdrop-blur-md p-4" onClick={onClose}>
+      <motion.div initial={{ scale: 0.9, y: 40 }} animate={{ scale: 1, y: 0 }} onClick={e => e.stopPropagation()}
+        className="bg-surface rounded-[2.5rem] p-8 w-full max-w-xl relative border border-white/5 shadow-3xl">
+        <button onClick={onClose} className="absolute top-6 right-6 grid h-10 w-10 place-items-center rounded-xl bg-white/5 hover:bg-white/10 transition-colors"><X className="h-5 w-5" /></button>
+        
+        <h2 className="text-4xl font-heading tracking-tight leading-none">Agendar Pelada</h2>
+        <p className="text-sm text-muted-foreground mt-2 font-medium">Preencha os detalhes do próximo confronto.</p>
 
-        <div className="mt-6 grid grid-cols-2 gap-3">
-          <Field label="Nome" full><input className="field" placeholder="Pelada de Quarta" /></Field>
-          <Field label="Local" full><input className="field" placeholder="Arena Champions" /></Field>
+        <div className="mt-8 grid grid-cols-2 gap-4">
+          <Field label="Título do Match" full><input className="field" placeholder="Ex: Pelada dos Amigos" /></Field>
+          <Field label="Localização" full><input className="field" placeholder="Ex: Arena Champions" /></Field>
           <Field label="Data"><input type="date" className="field" /></Field>
-          <Field label="Horário"><input type="time" className="field" /></Field>
-          <Field label="Duração"><input className="field" placeholder="90 min" /></Field>
-          <Field label="Limite"><input className="field" placeholder="14" /></Field>
-          <Field label="Tipo">
+          <Field label="Horário Inicial"><input type="time" className="field" /></Field>
+          <Field label="Máx. Jogadores"><input className="field" placeholder="14" /></Field>
+          <Field label="Formato">
             <select className="field"><option>Society</option><option>Futsal</option><option>Campo</option></select>
-          </Field>
-          <Field label="Modo">
-            <select className="field"><option>Pública</option><option>Privada</option></select>
           </Field>
         </div>
 
-        <button onClick={onClose} className="mt-6 w-full rounded-xl gradient-neon py-3 text-sm font-bold text-neon-foreground glow-neon hover:scale-[1.02] transition-transform">Criar Partida</button>
+        <button onClick={onClose} className="mt-8 w-full btn-premium py-4">Confirmar Agendamento</button>
 
-        <style>{`.field { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:10px 12px; font-size:14px; color:inherit; outline:none; }
-        .field:focus { border-color: oklch(0.86 0.22 150 / 0.5); box-shadow: 0 0 0 3px oklch(0.86 0.22 150 / 0.15); }`}</style>
+        <style>{`.field { width:100%; background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.05); border-radius:16px; padding:12px 16px; font-size:14px; color:inherit; outline:none; transition: all 0.2s; font-weight: 500; }
+        .field:focus { border-color: var(--color-primary); background:rgba(255,255,255,0.06); }`}</style>
       </motion.div>
     </motion.div>
   );
