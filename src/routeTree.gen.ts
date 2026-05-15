@@ -9,38 +9,194 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as RankingRouteImport } from './routes/ranking'
+import { Route as PerfilRouteImport } from './routes/perfil'
+import { Route as PartidasRouteImport } from './routes/partidas'
+import { Route as JogadoresRouteImport } from './routes/jogadores'
+import { Route as EstatisticasRouteImport } from './routes/estatisticas'
+import { Route as ConfiguracoesRouteImport } from './routes/configuracoes'
+import { Route as CampeonatosRouteImport } from './routes/campeonatos'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as PartidasIdRouteImport } from './routes/partidas.$id'
 
+const RankingRoute = RankingRouteImport.update({
+  id: '/ranking',
+  path: '/ranking',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PerfilRoute = PerfilRouteImport.update({
+  id: '/perfil',
+  path: '/perfil',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PartidasRoute = PartidasRouteImport.update({
+  id: '/partidas',
+  path: '/partidas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JogadoresRoute = JogadoresRouteImport.update({
+  id: '/jogadores',
+  path: '/jogadores',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EstatisticasRoute = EstatisticasRouteImport.update({
+  id: '/estatisticas',
+  path: '/estatisticas',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ConfiguracoesRoute = ConfiguracoesRouteImport.update({
+  id: '/configuracoes',
+  path: '/configuracoes',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CampeonatosRoute = CampeonatosRouteImport.update({
+  id: '/campeonatos',
+  path: '/campeonatos',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PartidasIdRoute = PartidasIdRouteImport.update({
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => PartidasRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/campeonatos': typeof CampeonatosRoute
+  '/configuracoes': typeof ConfiguracoesRoute
+  '/estatisticas': typeof EstatisticasRoute
+  '/jogadores': typeof JogadoresRoute
+  '/partidas': typeof PartidasRouteWithChildren
+  '/perfil': typeof PerfilRoute
+  '/ranking': typeof RankingRoute
+  '/partidas/$id': typeof PartidasIdRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/campeonatos': typeof CampeonatosRoute
+  '/configuracoes': typeof ConfiguracoesRoute
+  '/estatisticas': typeof EstatisticasRoute
+  '/jogadores': typeof JogadoresRoute
+  '/partidas': typeof PartidasRouteWithChildren
+  '/perfil': typeof PerfilRoute
+  '/ranking': typeof RankingRoute
+  '/partidas/$id': typeof PartidasIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/campeonatos': typeof CampeonatosRoute
+  '/configuracoes': typeof ConfiguracoesRoute
+  '/estatisticas': typeof EstatisticasRoute
+  '/jogadores': typeof JogadoresRoute
+  '/partidas': typeof PartidasRouteWithChildren
+  '/perfil': typeof PerfilRoute
+  '/ranking': typeof RankingRoute
+  '/partidas/$id': typeof PartidasIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/campeonatos'
+    | '/configuracoes'
+    | '/estatisticas'
+    | '/jogadores'
+    | '/partidas'
+    | '/perfil'
+    | '/ranking'
+    | '/partidas/$id'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/campeonatos'
+    | '/configuracoes'
+    | '/estatisticas'
+    | '/jogadores'
+    | '/partidas'
+    | '/perfil'
+    | '/ranking'
+    | '/partidas/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/campeonatos'
+    | '/configuracoes'
+    | '/estatisticas'
+    | '/jogadores'
+    | '/partidas'
+    | '/perfil'
+    | '/ranking'
+    | '/partidas/$id'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  CampeonatosRoute: typeof CampeonatosRoute
+  ConfiguracoesRoute: typeof ConfiguracoesRoute
+  EstatisticasRoute: typeof EstatisticasRoute
+  JogadoresRoute: typeof JogadoresRoute
+  PartidasRoute: typeof PartidasRouteWithChildren
+  PerfilRoute: typeof PerfilRoute
+  RankingRoute: typeof RankingRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/ranking': {
+      id: '/ranking'
+      path: '/ranking'
+      fullPath: '/ranking'
+      preLoaderRoute: typeof RankingRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/perfil': {
+      id: '/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof PerfilRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/partidas': {
+      id: '/partidas'
+      path: '/partidas'
+      fullPath: '/partidas'
+      preLoaderRoute: typeof PartidasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/jogadores': {
+      id: '/jogadores'
+      path: '/jogadores'
+      fullPath: '/jogadores'
+      preLoaderRoute: typeof JogadoresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/estatisticas': {
+      id: '/estatisticas'
+      path: '/estatisticas'
+      fullPath: '/estatisticas'
+      preLoaderRoute: typeof EstatisticasRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/configuracoes': {
+      id: '/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof ConfiguracoesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/campeonatos': {
+      id: '/campeonatos'
+      path: '/campeonatos'
+      fullPath: '/campeonatos'
+      preLoaderRoute: typeof CampeonatosRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/': {
       id: '/'
       path: '/'
@@ -48,12 +204,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/partidas/$id': {
+      id: '/partidas/$id'
+      path: '/$id'
+      fullPath: '/partidas/$id'
+      preLoaderRoute: typeof PartidasIdRouteImport
+      parentRoute: typeof PartidasRoute
+    }
   }
 }
 
+interface PartidasRouteChildren {
+  PartidasIdRoute: typeof PartidasIdRoute
+}
+
+const PartidasRouteChildren: PartidasRouteChildren = {
+  PartidasIdRoute: PartidasIdRoute,
+}
+
+const PartidasRouteWithChildren = PartidasRoute._addFileChildren(
+  PartidasRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  CampeonatosRoute: CampeonatosRoute,
+  ConfiguracoesRoute: ConfiguracoesRoute,
+  EstatisticasRoute: EstatisticasRoute,
+  JogadoresRoute: JogadoresRoute,
+  PartidasRoute: PartidasRouteWithChildren,
+  PerfilRoute: PerfilRoute,
+  RankingRoute: RankingRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
+
+import type { getRouter } from './router.tsx'
+import type { startInstance } from './start.ts'
+declare module '@tanstack/react-start' {
+  interface Register {
+    ssr: true
+    router: Awaited<ReturnType<typeof getRouter>>
+    config: Awaited<ReturnType<typeof startInstance.getOptions>>
+  }
+}
