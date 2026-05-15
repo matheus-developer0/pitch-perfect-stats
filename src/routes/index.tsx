@@ -4,6 +4,7 @@ import { Trophy, Target, Zap, Award, Activity, Goal, Shield, Users, MapPin, Cloc
 import { me, players, feed, matches, rankByGoals, rankByMVP, rankByOverall } from "@/lib/mock-data";
 import { PlayerCard } from "@/components/PlayerCard";
 import { StatCard } from "@/components/StatCard";
+import { MatchTicker } from "@/components/MatchTicker";
 
 export const Route = createFileRoute("/")({ component: Dashboard });
 
@@ -16,6 +17,10 @@ function Dashboard() {
 
   return (
     <div className="space-y-12">
+      <div className="-mx-4 lg:-mx-8">
+        <MatchTicker />
+      </div>
+
       {/* Hero / Featured */}
       <section className="relative min-h-[400px] rounded-[2.5rem] overflow-hidden border border-white/5 bg-surface shadow-2xl">
         <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-background to-accent/10" />
