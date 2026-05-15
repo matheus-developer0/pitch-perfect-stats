@@ -72,15 +72,14 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
   head: () => ({
     meta: [
       { charSet: "utf-8" },
-      { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Pro Club — Pelada & Estatísticas" },
-      { name: "description", content: "Plataforma premium para organizar peladas e acompanhar estatísticas estilo FIFA Ultimate Team." },
-      { name: "author", content: "Pro Club" },
-      { property: "og:title", content: "Pro Club — Pelada & Estatísticas" },
-      { property: "og:description", content: "Transforme sua pelada em uma carreira profissional." },
+      { name: "viewport", content: "width=device-width, initial-scale=1, maximum-scale=5" },
+      { title: "Pitch Perfect Stats — A Elite das Peladas" },
+      { name: "description", content: "Gerencie suas peladas com estatísticas profissionais, ranking de artilheiros e gerador de times equilibrados estilo EA FC Pro Club." },
+      { name: "keywords", content: "futebol, pelada, estatísticas, ranking, artilheiro, gerador de times, pro club, esporte" },
+      { property: "og:title", content: "Pitch Perfect Stats — Performance Elite" },
+      { property: "og:description", content: "Transforme sua pelada em uma liga profissional com estatísticas em tempo real." },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
       {

@@ -1,3 +1,4 @@
+import React, { memo } from "react";
 import { motion } from "motion/react";
 import { TrendingUp, TrendingDown, LucideIcon } from "lucide-react";
 
@@ -17,7 +18,7 @@ const accentMap = {
   destructive: "text-destructive",
 };
 
-export function StatCard({ label, value, delta, icon: Icon, accent = "neon", index = 0 }: Props) {
+export const StatCard = memo(function StatCard({ label, value, delta, icon: Icon, accent = "neon", index = 0 }: Props) {
   const positive = (delta ?? 0) >= 0;
   return (
     <motion.div
@@ -52,4 +53,4 @@ export function StatCard({ label, value, delta, icon: Icon, accent = "neon", ind
       </div>
     </motion.div>
   );
-}
+});

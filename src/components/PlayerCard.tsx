@@ -1,3 +1,4 @@
+import React, { memo } from "react";
 import { motion } from "motion/react";
 import { Player } from "@/lib/mock-data";
 import { Link } from "@tanstack/react-router";
@@ -17,7 +18,7 @@ const sizeMap = {
   xl: "w-full max-w-[320px] h-[460px]",
 };
 
-export function PlayerCard({ player, size = "md", variant = "neon", to, index = 0, className }: Props & { className?: string }) {
+export const PlayerCard = memo(function PlayerCard({ player, size = "md", variant = "neon", to, index = 0, className }: Props & { className?: string }) {
   const isGold = variant === "gold" || player.overall >= 85;
   const Wrapper: any = to ? Link : "div";
   const props = to ? { to } : {};
@@ -65,6 +66,7 @@ export function PlayerCard({ player, size = "md", variant = "neon", to, index = 
               <img
                 src={player.avatar}
                 alt={player.name}
+                loading="lazy"
                 className="relative h-full w-full object-cover rounded-3xl border-2 border-white/5 shadow-2xl"
               />
             </div>
@@ -93,4 +95,4 @@ export function PlayerCard({ player, size = "md", variant = "neon", to, index = 
       </Wrapper>
     </motion.div>
   );
-}
+});
